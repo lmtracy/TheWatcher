@@ -6,7 +6,15 @@ $(document).ready(() => {
   });
 });
 
+function moviesSelected(search){
+  sessionStorage.setItem('searchText', id);
+  window.location = 'list.html';
+  return false;
+}
+
 function getMovies(searchText){
+  // let movieId = sessionStorage.getItem('movieId');
+
   axios.get('http://www.omdbapi.com?apikey=e51d793f&s='+searchText)
     .then((response) => {
       console.log(response);
@@ -18,7 +26,7 @@ function getMovies(searchText){
             <div class="well text-center">
               <img src="${movie.Poster}">
               <h5>${movie.Title}</h5>
-              <a onclick="movieSelected('${movie.imdbID}')" class="btn btn-primary" href="#">Movie Details</a>
+              <a onclick="moviesSelected('${movie.imdbID}')" class="btn btn-primary" href="#">Movie Details</a>
             </div>
           </div>
         `;
@@ -30,6 +38,8 @@ function getMovies(searchText){
       console.log(err);
     });
 }
+
+//Movie details in new window
 
 function movieSelected(id){
   sessionStorage.setItem('movieId', id);
